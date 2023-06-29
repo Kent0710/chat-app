@@ -22,6 +22,7 @@ export default function AddFriendPage() {
                 });
 
                 const data = await response.json();
+                console.log(data);
                 setSessionUserName(data.sessionUser.name);
             } catch (err) {
                 console.error(err);
