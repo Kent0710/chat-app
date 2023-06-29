@@ -91,8 +91,7 @@ export default function AddFriendPage() {
 
     return (
         <main className="bg-blue-500 h-screen flex flex-col items-center justify-center">
-            <h1>hi</h1>
-        {/* {conversations.length === 0 ? (
+        {conversations.length === 0 ? (
             <button className="bg-cyan-500 rounded-md p-2" onClick={startConversation}>Start New Conversation</button>
         ) : (
             conversations.map((conversation) => (
@@ -136,7 +135,7 @@ export default function AddFriendPage() {
                     </div>
                 ))}
             </div>
-        )} */}
+        )}
         </main>
       );
 }
