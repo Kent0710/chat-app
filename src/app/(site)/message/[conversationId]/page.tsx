@@ -6,6 +6,8 @@ import { pusherClient } from "@/libs/pusher";
 import Link from "next/link";
 import { fetchOriginHost } from "@/libs/utils";
 
+export const dynamic = 'force-dynamic'
+
 export default function MessagePage() {
   const [title, setTitle] = useState("");
   const [senderName, setSenderName] = useState("");
