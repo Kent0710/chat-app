@@ -15,7 +15,7 @@ export default function RegisterPage() {
         e.preventDefault();
 
         try {
-            const response = await fetch (`${fetchOriginHost()}/api/register`, {
+            const response = await fetch (`https://chat-app-tan-seven.vercel.app/api/register`, {
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
                 body : JSON.stringify({email, name, userType})
