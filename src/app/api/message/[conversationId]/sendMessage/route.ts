@@ -40,8 +40,6 @@ export async function POST(request : Request,
                     }
                 });
 
-
-
                 let listeners = conversation?.users.map(user => user.name);
                 console.log(listeners);
                 // listeners?.map(async (listener) => {
@@ -66,9 +64,7 @@ export async function POST(request : Request,
                 //     })
                 // })
 
-
-
-                const responseBody = { message : "New Message Sent" }
+                const responseBody = { message : "New Message Sent", conversation : conversation }
                 return new NextResponse(JSON.stringify(responseBody), {
                     headers : {
                         'Access-Control-Allow-Origin' : origin || "*",
