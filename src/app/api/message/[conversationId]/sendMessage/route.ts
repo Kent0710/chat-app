@@ -56,10 +56,11 @@ export async function POST(request : Request,
                 //     newMessage : newMessage
                 // })
 
-                let listeners = conversation?.users.map(user => user.name);
-
-                listeners?.map(async (listener) => {
-                    await triggerPusherServer(listener, newMessage)
+                let listeners = [ "shin", "nami" ];
+                listeners.map( async (listener) => {
+                    await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
+                        newMessage : newMessage
+                    })
                 })
 
                 const responseBody = { message : "New Message Sent" }
@@ -81,10 +82,4 @@ export async function POST(request : Request,
             }
         })
     }
-}
-
-async function triggerPusherServer(listener : any, newMessage : any) {
-    await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
-        newMessage: newMessage
-      });
 }
