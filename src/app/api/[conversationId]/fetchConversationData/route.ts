@@ -2,6 +2,8 @@ import prisma from "@/libs/prisma"
 import { NextResponse } from "next/server"
 import { cookies } from "next/dist/client/components/headers"
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request : Request,
     { params } : { params : { conversationId : string } }
 ) {

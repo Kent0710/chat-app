@@ -81,6 +81,7 @@ export default function MessagePage() {
         });
 
         const data = await response.json();
+        
     } catch (err) {
         console.error(err);
     }
