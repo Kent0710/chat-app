@@ -41,8 +41,8 @@ export async function POST(request : Request,
                 });
 
                 let listeners = conversation?.users.map(user => user.name);
-                listeners?.map((listener) => {
-                    pusherServer.trigger(`new-message-${listener}`, 'new-message', {
+                listeners?.map( async (listener) => {
+                    await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
                         newMessage : newMessage
                     })
                 });
