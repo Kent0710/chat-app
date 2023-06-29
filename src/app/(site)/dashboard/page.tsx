@@ -15,7 +15,7 @@ export default function AddFriendPage() {
     useEffect(() => {
         async function fetchSessionUser() {
             try {
-                const response = await fetch (`${fetchOriginHost()}/api/fetchSessionUser`, {
+                const response = await fetch (`/api/fetchSessionUser`, {
                     method : "GET",
                     headers : {"Content-Type" : "application/json"},
                     cache : "no-store"
@@ -32,7 +32,7 @@ export default function AddFriendPage() {
 
         async function fetchConversations() {
             try {
-                const response = await fetch (`${fetchOriginHost()}/api/fetchConversations`, {
+                const response = await fetch (`/api/fetchConversations`, {
                     method : "GET",
                     headers : {"Content-Type" : "application/json"},
                     cache : "no-store"
@@ -49,7 +49,7 @@ export default function AddFriendPage() {
 
         async function fetchUsers() {
             try {
-                const response = await fetch (`${fetchOriginHost()}/api/fetchUsers`, {
+                const response = await fetch (`/api/fetchUsers`, {
                     method : "GET",
                     headers : {"Content-Type" : "application/json"},
                     cache : "no-store"
@@ -73,7 +73,7 @@ export default function AddFriendPage() {
     const router = useRouter();
     async function checkExistingConversation(clientTwoId : string) {
         try {
-            const response = await fetch (`${fetchOriginHost()}/api/checkExistingConversation`, {
+            const response = await fetch (`/api/checkExistingConversation`, {
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
                 body : JSON.stringify({clientTwoId})
@@ -82,7 +82,7 @@ export default function AddFriendPage() {
             const data = await response.json();
             const conversationId = data.conversation.id
             if (data.flag === "success") {
-                router.push(`${fetchOriginHost()}/message/${conversationId}`)
+                router.push(`/message/${conversationId}`)
             }
         } catch (err) {
             console.error(err);

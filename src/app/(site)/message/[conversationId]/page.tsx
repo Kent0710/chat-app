@@ -23,7 +23,7 @@ export default function MessagePage() {
 
     async function fetchConversationData() {
       try {
-        const response = await fetch (`${fetchOriginHost()}/api/${conversationId}/fetchConversationData`, {
+        const response = await fetch (`/api/${conversationId}/fetchConversationData`, {
           method : "GET",
           headers : {"Content-Type" : "application/json"},
           cache : "no-store",
@@ -44,7 +44,7 @@ export default function MessagePage() {
 
     async function fetchUsers() {
       try {
-        const response = await fetch (`${fetchOriginHost()}/api/fetchUsers`, {
+        const response = await fetch (`/api/fetchUsers`, {
           method : "GET",
           headers : {"Content-Type" : "application/json"}
         });
@@ -74,7 +74,7 @@ export default function MessagePage() {
     e.preventDefault();
 
     try {
-        const response = await fetch (`${fetchOriginHost()}/api${pathname}/sendMessage`, {
+        const response = await fetch (`/api${pathname}/sendMessage`, {
             method : "POST",
             headers : {"Content-Type" : "application/json"},
             body : JSON.stringify({title})
@@ -111,7 +111,7 @@ export default function MessagePage() {
     }
 
     try {
-      const response = await fetch (`${fetchOriginHost()}/api/${pathname}/addUser`, {
+      const response = await fetch (`/api/${pathname}/addUser`, {
         method : "POST",
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify({userId})
@@ -126,7 +126,7 @@ export default function MessagePage() {
 
   async function removeUser(userId : string) {
     try {
-      const response = await fetch (`${fetchOriginHost()}/api/${pathname}/removeUser/${userId}`, {
+      const response = await fetch (`/api/${pathname}/removeUser/${userId}`, {
         method : "DELETE",
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify({userId})

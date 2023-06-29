@@ -23,7 +23,7 @@ export default function RegisterPage() {
 
             const data = await response.json();
             if (data.message === "register user") {
-                router.push(`${fetchOriginHost()}/dashboard`)
+                router.push(`/dashboard`)
             } 
         } catch (err) {
             console.error(err);

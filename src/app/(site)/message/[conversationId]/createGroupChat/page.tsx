@@ -16,7 +16,7 @@ export default function CreateGroupChatPage() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const response = await fetch (`${fetchOriginHost()}/api/fetchUsers`, {
+                const response = await fetch (`/api/fetchUsers`, {
                     method : "GET",
                     headers : {"Content-Type" : "application/json"},
                     cache : "no-store"
@@ -47,7 +47,7 @@ export default function CreateGroupChatPage() {
     const [groupChatName, setGroupChatName] = useState("");
     async function createGroupChat() {
         try {
-            const response = await fetch (`${fetchOriginHost()}/api/${pathname}`, {
+            const response = await fetch (`/api/${pathname}`, {
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
                 body : JSON.stringify({groupChatName, addedUsersId})
@@ -55,7 +55,7 @@ export default function CreateGroupChatPage() {
 
             const data = await response.json();
             if (data.flag === "success") {
-                router.push(`${fetchOriginHost()}/dashboard`)
+                router.push(`/dashboard`)
             }
         } catch (err) {
             console.error(err);
