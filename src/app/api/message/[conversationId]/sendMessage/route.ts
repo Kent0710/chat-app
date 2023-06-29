@@ -40,9 +40,12 @@ export async function POST(request : Request,
                     }
                 });
 
-                // let listeners = conversation?.users.map(user => user.name);
-                // listeners?.map((listener) => {
-                //     pusherServer.trigger(`new-message-${listener}`, 'new-message', {
+
+
+                let listeners = conversation?.users.map(user => user.name);
+                console.log(listeners);
+                // listeners?.map(async (listener) => {
+                //     await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
                 //         newMessage : newMessage
                 //     })
                 // });
@@ -56,12 +59,14 @@ export async function POST(request : Request,
                 //     newMessage : newMessage
                 // })
 
-                let listeners = [ "shin", "nami" ];
-                listeners.map( async (listener) => {
-                    await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
-                        newMessage : newMessage
-                    })
-                })
+                // let listeners = [ "shin", "nami" ];
+                // await listeners.map( async (listener) => {
+                //     await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
+                //         newMessage : newMessage
+                //     })
+                // })
+
+
 
                 const responseBody = { message : "New Message Sent" }
                 return new NextResponse(JSON.stringify(responseBody), {
