@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { fetchOriginHost } from "@/libs/utils";
 
-export const dynamic = 'force-dynamic'
 
 export default function AddFriendPage() {
     const [sessionUserName, setSessionUserName] = useState("");
