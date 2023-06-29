@@ -15,7 +15,7 @@ export default function AddFriendPage() {
     useEffect(() => {
         async function fetchSessionUser() {
             try {
-                const response = await fetch (`/api/fetchSessionUser`, {
+                const response = await fetch (`https://chat-app-iota-silk.vercel.app/api/fetchSessionUser`, {
                     method : "GET",
                     headers : {"Content-Type" : "application/json"},
                     cache : "no-store"
@@ -32,7 +32,7 @@ export default function AddFriendPage() {
 
         async function fetchConversations() {
             try {
-                const response = await fetch (`/api/fetchConversations`, {
+                const response = await fetch (`https://chat-app-iota-silk.vercel.app/api/fetchConversations`, {
                     method : "GET",
                     headers : {"Content-Type" : "application/json"},
                     cache : "no-store"
@@ -49,7 +49,7 @@ export default function AddFriendPage() {
 
         async function fetchUsers() {
             try {
-                const response = await fetch (`/api/fetchUsers`, {
+                const response = await fetch (`https://chat-app-iota-silk.vercel.app/api/fetchUsers`, {
                     method : "GET",
                     headers : {"Content-Type" : "application/json"},
                     cache : "no-store"
@@ -73,7 +73,7 @@ export default function AddFriendPage() {
     const router = useRouter();
     async function checkExistingConversation(clientTwoId : string) {
         try {
-            const response = await fetch (`/api/checkExistingConversation`, {
+            const response = await fetch (`https://chat-app-iota-silk.vercel.app/api/checkExistingConversation`, {
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
                 body : JSON.stringify({clientTwoId})
