@@ -3,7 +3,5 @@ export function fetchOriginHost() {
     
     if (originHost !== undefined) {
         return `https://chat-app-tan-seven.vercel.app/`
-    } else {
-        return "error"
     }
 }
