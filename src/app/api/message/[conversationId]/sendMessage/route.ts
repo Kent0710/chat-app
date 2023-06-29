@@ -41,7 +41,6 @@ export async function POST(request : Request,
                 });
 
                 let listeners = conversation?.users.map(user => user.name);
-                console.log(listeners);
                 // listeners?.map(async (listener) => {
                 //     await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
                 //         newMessage : newMessage
@@ -64,7 +63,7 @@ export async function POST(request : Request,
                 //     })
                 // })
 
-                const responseBody = { message : "New Message Sent", conversation : conversation }
+                const responseBody = { message : "New Message Sent", listeners : listeners }
                 return new NextResponse(JSON.stringify(responseBody), {
                     headers : {
                         'Access-Control-Allow-Origin' : origin || "*",
