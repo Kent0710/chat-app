@@ -5,13 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { fetchOriginHost } from "@/libs/utils";
 
-
 export default function AddFriendPage() {
     const [sessionUserName, setSessionUserName] = useState("");
     const [users, setUsers] = useState<any[]>([]);
     const [conversations, setConversations] = useState<any[]>([])
     const [isStartingConversation, setIsStartingConversation] = useState(false);
-
 
     useEffect(() => {
         async function fetchSessionUser() {

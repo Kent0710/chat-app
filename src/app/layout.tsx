@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Create Next App',
