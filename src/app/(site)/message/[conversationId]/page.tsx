@@ -60,19 +60,15 @@ export default function MessagePage() {
 
     fetchUsers();
 
-    async function initPusherClient() {
-      const channel = await pusherClient.subscribe(`new-message-${senderName}`);
+    const channel = pusherClient.subscribe(`new-message-${senderName}`);
 
-      await channel.bind('new-message', (data : any) => {
-        // append the new message here
-        setMessages((prevMessages) => [...prevMessages, data.newMessage])
-  
-        console.log(data.newMessage);
-        console.log(`New message sent by ${data.newMessage.sender.name}`)
-      })
-    }
-    
-    initPusherClient();
+    channel.bind('new-message', (data : any) => {
+      // append the new message here
+      setMessages((prevMessages) => [...prevMessages, data.newMessage])
+
+      console.log(data.newMessage);
+      console.log(`New message sent by ${data.newMessage.sender.name}`)
+    })
 
   }, [pathname, senderName]);
 
