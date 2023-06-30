@@ -54,8 +54,9 @@ export default function RegisterPage() {
                              id="userType"
                              value={userType}
                              onChange={(e)=>setUserType(e.target.value)} />
-                     <input type="submit" />
+                     <input className="bg-cyan-400 rounded-md p-1" type="submit" />
                  </form>
+                 <h1>ONE CLICK FOR THE BRIGHT FUTURE MWHEHEHEHE</h1>
              </div>
         </main>
     )
