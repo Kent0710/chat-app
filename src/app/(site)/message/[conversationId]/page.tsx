@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { pusherClient } from "@/libs/pusher";
 import Link from "next/link";
-import { fetchOriginHost } from "@/libs/utils";
+import ConversationContainerComponent from "@/app/components/conversationContainer/page";
+import MessageContainerComponent from "@/app/components/messageContainer/page";
 
 export const dynamic = 'force-dynamic'
 
 export default function MessagePage() {
   const [title, setTitle] = useState("");
   const [senderName, setSenderName] = useState("");
+  const [receiver, setReceiver] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
   const [isGroupChat, setIsGroupChat] = useState(false);
   const [isViewingMembers, setIsViewingMembers] = useState(false);
@@ -36,6 +38,7 @@ export default function MessagePage() {
         setSenderName(data.sender.name);
         setMembers(data.members);
         setMessages(data.messages);
+        setReceiver(data.receiver);
         setIsGroupChat(data.isGroupChat);
       } catch (err) {
         console.error(err);
@@ -141,10 +144,68 @@ export default function MessagePage() {
       console.error(err);
     }
   }
+
+  const ReceiverNameComponent = () => {
+    return (
+        <div className="bg-slate-600 w-full h-20 flex items-center justify-center">
+            Receiver : {receiver}
+        </div>
+    )
+  }
+
+  const MessageContainer = (props : any) => {
+    let msgStyle = "flex flex-col w-full items-center bg-red-400 p-4"
+
+    return (
+      <>
+        {messages.map((message) => (
+          <div key={message.id} className={msgStyle}>
+            <p className=" text-2xl"> Title : {message.title} </p>
+            <p> Sent by : {message.sender.name} </p>
+          </div>
+        ))}
+      </>
+    )
+  }
+
+  const MessageComponent = () => {
+    return (
+      <div className="bg-slate-200 w-full h-full overflow-auto flex flex-col gap-1">
+        <MessageContainer />
+      </div>
+    )
+  }
+
+  const SendMessageComponent = () => {
+    return (
+      <div className='bg-slate-600 w-full h-24 flex flex-row-reverse items-center'>
+        <form onSubmit={sendMessage}>
+          <input type="text"
+            id="title"
+            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)} />
+          <input className="bg-cyan-500 rounded-md p-1 ml-2" type="submit" />
+        </form>
+      </div>
+    )
+  }
  
+  const MessagePanel = () => {
+    return(
+      <main className="bg-slate-400 w-full h-full flex flex-col">
+        <ReceiverNameComponent />
+        <MessageComponent />
+        <SendMessageComponent />
+      </main>
+    )
+  }
+
   return (
-    <main className="flex flex-col bg-blue-500 h-screen">
-      <div>
+    <main className="flex bg-white w-screen h-screen m-0 p-0">
+      <ConversationContainerComponent />
+      <MessagePanel />
+      {/* <div>
         <h1 className="text-center"> Sender : {senderName} (your username) </h1>
       </div>
       <form onSubmit={sendMessage}>
@@ -200,7 +261,7 @@ export default function MessagePage() {
         <Link className="bg-cyan-400 rounded-md w-20 p-1" href={`${pathname}/createGroupChat`}>Create Group Chat</Link>
       </div>
       )}
-      </div>
+      </div> */}
     </main>
   );
 }

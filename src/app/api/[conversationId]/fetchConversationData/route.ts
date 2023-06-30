@@ -44,15 +44,23 @@ export async function GET(request : Request,
                 }
 
                 let isGroupChat = false;
+                let receiver;
                 if (receivers.length > 2) {
                     isGroupChat = true;
+                } else {
+
+                    if (sender?.name === receivers[0].name) {
+                        receiver = receivers[1].name
+                    } else {
+                        receiver = receivers[0].name
+                    }
                 }
 
                 return NextResponse.json({message : "Conversation Data Retrieved",
                     members : conversationUsers,
                     messages : conversatonMessages,
                     sender : sender,
-                    receivers : receivers,
+                    receiver : receiver,
                     isGroupChat : isGroupChat
                 })
             }
