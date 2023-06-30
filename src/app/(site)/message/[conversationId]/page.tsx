@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import React from "react";
 import { pusherClient } from "@/libs/pusher";
 import Link from "next/link";
 import ConversationContainerComponent from "@/app/components/conversationContainer/page";
@@ -160,7 +161,7 @@ export default function MessagePage() {
       <>
         {messages.map((message) => (
           <div key={message.id} className={msgStyle}>
-            <p className=" text-2xl"> Title : {message.title} </p>
+            <p className=" text-lg"> Title : {message.title} </p>
             <p> Sent by : {message.sender.name} </p>
           </div>
         ))}
@@ -176,7 +177,13 @@ export default function MessagePage() {
     )
   }
 
+  const inputRef = React.useCallback((node : any) => {
+    if (node !== null) {
+      node.focus();
+    }
+  }, []);
   const SendMessageComponent = () => {
+
     return (
       <div className='bg-slate-600 w-full h-24 flex flex-row-reverse items-center'>
         <form onSubmit={sendMessage}>
@@ -184,7 +191,8 @@ export default function MessagePage() {
             id="title"
             name="title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)} />
+            onChange={(e) => setTitle(e.target.value)}
+            ref={inputRef} /> 
           <input className="bg-cyan-500 rounded-md p-1 ml-2" type="submit" />
         </form>
       </div>
