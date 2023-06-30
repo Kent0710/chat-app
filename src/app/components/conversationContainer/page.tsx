@@ -89,7 +89,7 @@ export default function ConversationContainerComponent(props : any) {
     }
 
     return (
-        <main className="bg-indigo-600 h-screen border-2 w-1/3">
+        <main className="bg-indigo-600 h-full border-2 w-1/3">
             {/* {conversations.length === 0 ? (
             <button className="bg-cyan-500 rounded-md p-2" onClick={startConversation}>Start New Conversation</button>
         ) : (

@@ -148,7 +148,7 @@ export default function MessagePage() {
 
   const ReceiverNameComponent = () => {
     return (
-        <div className="bg-slate-600 w-full h-20 flex items-center justify-center">
+        <div className="bg-slate-600 w-full h-10 flex items-center justify-center">
             Receiver : {receiver}
         </div>
     )
@@ -210,7 +210,7 @@ export default function MessagePage() {
   }
 
   return (
-    <main className="flex bg-white w-screen h-screen m-0 p-0">
+    <main className="flex bg-white h-[92vh] w-screen m-0 p-0">
       <ConversationContainerComponent />
       <MessagePanel />
       {/* <div>
