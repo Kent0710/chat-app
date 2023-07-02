@@ -90,6 +90,7 @@ export default function MessagePage() {
         });
 
         const data = await response.json();
+        setTitle("");
         console.log(data);
     } catch (err) {
         console.error(err);
