@@ -79,7 +79,9 @@ export default function MessagePage() {
 
   }, [pathname, senderName]);
 
+  const [isSending, setIsSending] = useState(false);
   const sendMessage = async (e : React.SyntheticEvent) => {
+    setIsSending(true);
     e.preventDefault();
 
     try {
@@ -91,6 +93,7 @@ export default function MessagePage() {
 
         const data = await response.json();
         setTitle("");
+        setIsSending(false);
         console.log(data);
     } catch (err) {
         console.error(err);
@@ -254,36 +257,6 @@ export default function MessagePage() {
 
   return (
     <>
-      {/* <div className="flex h-full w-full">
-        <div className="flex flex-col flex-2 h-full w-full border-0 gap-4 p-4 sm:w-1/6 sm:h-full sm:border-2">
-            <div className="flex items-center justify-between">
-                <h1 className="md:block text-2xl font-bold tracking-tight text-gray-900"> Chats </h1>
-                <svg className="w-[34px] shrink-0 h-[34px] text-gray-800 rounded-lg bg-slate-200 p-2 md:block dark:text-white hover:bg-slate-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
-                    <path d="M7.324 9.917A2.479 2.479 0 0 1 7.99 7.7l.71-.71a2.484 2.484 0 0 1 2.222-.688 4.538 4.538 0 1 0-3.6 3.615h.002ZM7.99 18.3a2.5 2.5 0 0 1-.6-2.564A2.5 2.5 0 0 1 6 13.5v-1c.005-.544.19-1.072.526-1.5H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h7.687l-.697-.7ZM19.5 12h-1.12a4.441 4.441 0 0 0-.579-1.387l.8-.795a.5.5 0 0 0 0-.707l-.707-.707a.5.5 0 0 0-.707 0l-.795.8A4.443 4.443 0 0 0 15 8.62V7.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.12c-.492.113-.96.309-1.387.579l-.795-.795a.5.5 0 0 0-.707 0l-.707.707a.5.5 0 0 0 0 .707l.8.8c-.272.424-.47.891-.584 1.382H8.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1.12c.113.492.309.96.579 1.387l-.795.795a.5.5 0 0 0 0 .707l.707.707a.5.5 0 0 0 .707 0l.8-.8c.424.272.892.47 1.382.584v1.12a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1.12c.492-.113.96-.309 1.387-.579l.795.8a.5.5 0 0 0 .707 0l.707-.707a.5.5 0 0 0 0-.707l-.8-.795c.273-.427.47-.898.584-1.392h1.12a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5ZM14 15.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/>
-                </svg>
-            </div>
-            <div className="flex items-center gap-2">
-                {isSearching && (
-                    <svg className="w-[18px] h-[18px] text-gray-800 dark:text-white hover:bg-slate-200 hover:w-[36px] hover:h-[36px] hover:p-2 rounded-lg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-                    </svg>
-                )}
-                <input type="text" 
-                    className="rounded-lg text-gray-900 border-none bg-gray-200 w-full block focus:ring-0 " 
-                    onFocus={handleSearchFocus}
-                    onBlur={handleSearchBlur} 
-                    placeholder="Search" />
-            </div>
-            <div className="overflow-auto flex flex-col gap-2">
-                {users.map((user) => (
-                    <div key={user.id} className="overflow-x-hidden flex flex-col hover:bg-slate-100 hover:cursor-pointer hover:rounded-xs" onClick={() => checkExistingConversation(user.id)}>
-                        <h2 className="text-base font-bold mx-2 text-gray-900"> {user.name} </h2>
-                        <h3 className="text-sm font-bold mx-2 text-gray-400"> {user.email} </h3>
-                    </div>
-                ))}
-            </div>
-        </div> */}
-
       <div className="flex h-full w-full ">
         <div className="hidden sm:flex sm:flex-col sm:flex-2 h-0 w-0 border-0 gap-4 p-4 sm:w-1/6 sm:h-full sm:border-2">
           <div className="flex items-center justify-between">
@@ -356,11 +329,18 @@ export default function MessagePage() {
           </div>
 
             <form onSubmit={sendMessage} className="flex flex-row-reverse border-y-2 h-16 p-2">
-              <button type="submit">
-                <svg className="block w-[38px] h-[38px] text-gray-800 dark:text-white rounded-lg p-2 bg-blue-200 mx-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                  <path stroke="blue" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
-                </svg>
-              </button>
+              {!isSending ? (
+                <button type="submit">
+                  <svg className="block w-[38px] h-[38px] text-gray-800 dark:text-white rounded-lg p-2 bg-blue-200 mx-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                    <path stroke="blue" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+                  </svg>
+                </button>
+              ) : (
+                <div role="status">
+                    <svg aria-hidden="true" className="w-8 h-8 m-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+                    <span className="sr-only">Loading...</span>
+                </div>
+              )}
               <input type="text"
                 name="title"
                 id="title"
@@ -408,71 +388,5 @@ export default function MessagePage() {
         )}
       </div>
     </>
-
-
-
-
-    // <main className="flex bg-white h-[92vh] w-screen m-0 p-0">
-
-    //   {/* <ConversationContainerComponent />
-    //   <MessagePanel /> */}
-    //   {/* <div>
-    //     <h1 className="text-center"> Sender : {senderName} (your username) </h1>
-    //   </div>
-    //   <form onSubmit={sendMessage}>
-    //     <label htmlFor="title">Title : </label>
-    //     <input type="text"
-    //       name="title"
-    //       id="title"
-    //       value={title}
-    //       onChange={(e) => setTitle(e.target.value)} />
-    //       <input className="bg-cyan-500 rounded-md p-1 ml-2" type="submit" />
-    //   </form>
-    //   <div className=" bg-indigo-900">
-    //     <h3 className="text-center">Messages</h3>
-    //     {messages.map((message) => (
-    //       <div key={message.id}>
-    //         <p> Title : {message.title} </p>
-    //         <p> Sent by : {message.sender.name} </p>
-    //       </div>
-    //     ))}
-    //   </div>
-    //   <div className="flex flex-col justify-center items-center gap-2">
-    //     <h1>Other Actions</h1>
-    //       <button className="bg-cyan-400 rounded-md p-1" onClick={viewMembers}>View Members </button>
-    //       {isViewingMembers && (
-    //         <div>
-    //           {members.map((member) => (
-    //             <div key={member.id}>
-    //               <p> Member Name : {member.name} </p>
-    //               <p> Member Email : {member.email} </p>
-    //               <button className="bg-cyan-400 rounded-md p-1" onClick={() => removeUser(member.id)}>Remove</button>
-    //             </div>
-    //           ))}
-    //         </div>
-    //       )}
-    //     {isGroupChat && (
-    //       <div>
-    //       <button  className="bg-cyan-400 rounded-md w-20" onClick={addUserClicked}>Add</button>
-    //     {isAdding && (
-    //       <div>
-    //         {users.map((user) => (
-    //           <div key={user.id}>
-    //             <p> User Add Name : {user.name} </p>
-    //             <p> User Add Email : {user.email}  </p>
-    //             <button onClick={() => addUser(user.id)}>Add User</button>
-    //           </div>
-    //         ))}
-    //       </div>
-    //     )}
-    //       </div>
-    //     )}
-    //   {!isGroupChat && (
-    //     <div>
-    //     <Link className="bg-cyan-400 rounded-md w-20 p-1" href={`${pathname}/createGroupChat`}>Create Group Chat</Link>
-    //   </div>
-    //   )}
-    //   </div> */}
-    // </main>
   );
 }
