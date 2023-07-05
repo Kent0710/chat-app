@@ -20,7 +20,7 @@ export async function GET(request : Request,
                     users : true,
                     messages : {
                         include : {
-                            sender : true
+                            sender :true
                         }
                     }
                 }
@@ -28,16 +28,16 @@ export async function GET(request : Request,
 
             if (conversation) {
                 const conversationUsers = conversation.users;
-                const conversatonMessages = conversation.messages;
+                const conversationMessages = conversation.messages;
 
-                const cookieStore = cookies();
-                const sessionUserId = cookieStore.get("sessionUserId");
+                const cookieStore =cookies();
+                const sessionUserId = cookieStore.get("sessionUserId")
 
                 let sender;
                 let receivers = [];
                 for (let i = 0; i < conversationUsers.length; i++) {
                     if (conversationUsers[i].id === sessionUserId?.value) {
-                        sender = conversationUsers[i];
+                        sender = conversationUsers[i]
                     } else {
                         receivers.push(conversationUsers[i])
                     }
@@ -45,26 +45,102 @@ export async function GET(request : Request,
 
                 let isGroupChat = false;
                 let receiver;
-                if (receivers.length > 2) {
+                if (receivers.length > 1) {
+                    receiver = conversation.groupChatName
                     isGroupChat = true;
-                } else {
-
+                } else if (receivers.length === 1) {
                     if (sender?.name === receivers[0].name) {
                         receiver = receivers[1].name
                     } else {
                         receiver = receivers[0].name
                     }
+                } else {
+                    // if it is 0
+                    receiver = conversationUsers[0].name;
                 }
 
-                return NextResponse.json({message : "Conversation Data Retrieved",
+
+                // let isGroupChat = false;
+                // let receiver;
+                // if (receivers.length > 2) {
+                //     isGroupChat = true;
+                // } else {
+                //     if(sender?.name === receivers[0].name) {
+                //         receiver = receivers[1].name
+                //     } else {
+                //         receiver = receivers[0].name
+                //     }
+                // }
+
+                return NextResponse.json({
+                    message : "conversation data retrieved",
+                    receivers : receivers,
                     members : conversationUsers,
-                    messages : conversatonMessages,
+                    messages : conversationMessages,
                     sender : sender,
                     receiver : receiver,
-                    isGroupChat : isGroupChat
+                    isGroupChat : isGroupChat,
+
                 })
+            } else {
+                return NextResponse.json({message : "conversation not found"})
             }
         }
+
+        // if (conversationId) {
+        //     const conversation = await prisma.conversation.findUnique({
+        //         where : {
+        //             id : conversationId
+        //         },
+        //         include : {
+        //             users : true,
+        //             messages : {
+        //                 include : {
+        //                     sender : true
+        //                 }
+        //             }
+        //         }
+        //     });
+
+        //     if (conversation) {
+        //         const conversationUsers = conversation.users;
+        //         const conversatonMessages = conversation.messages;
+
+        //         const cookieStore = cookies();
+        //         const sessionUserId = cookieStore.get("sessionUserId");
+
+        //         let sender;
+        //         let receivers = [];
+        //         for (let i = 0; i < conversationUsers.length; i++) {
+        //             if (conversationUsers[i].id === sessionUserId?.value) {
+        //                 sender = conversationUsers[i];
+        //             } else {
+        //                 receivers.push(conversationUsers[i])
+        //             }
+        //         }
+
+        //         let isGroupChat = false;
+        //         let receiver;
+        //         if (receivers.length > 2) {
+        //             isGroupChat = true;
+        //         } else {
+
+        //             if (sender?.name === receivers[0].name) {
+        //                 receiver = receivers[1].name
+        //             } else {
+        //                 receiver = receivers[0].name
+        //             }
+        //         }
+
+        //         return NextResponse.json({message : "Conversation Data Retrieved",
+        //             members : conversationUsers,
+        //             messages : conversatonMessages,
+        //             sender : sender,
+        //             receiver : receiver,
+        //             isGroupChat : isGroupChat
+        //         })
+        //     }
+        // }
 
     } catch (err) {
         return NextResponse.json({message : err})

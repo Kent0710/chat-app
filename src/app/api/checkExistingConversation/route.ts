@@ -4,36 +4,55 @@ import { cookies } from "next/dist/client/components/headers";
 
 export async function POST(request : Request) {
     try {
-
         const cookieStore = cookies();
-        // Client One as the Session User
-        const sessionUserId = cookieStore.get("sessionUserId");
 
-        // Client Two as the Receiver
+        // client one as the session user
+        const sessionUserId = cookieStore.get("sessionUserId")?.value
+
+        // client two as the receiver
         const { clientTwoId } = await request.json();
 
+        let conversation : any;
+        let allConversations : any;
         if (sessionUserId && clientTwoId) {
-            const conversation = await prisma.conversation.findFirst({
-                where : {
-                    usersId : {
-                        hasEvery : [ sessionUserId.value, clientTwoId ]
+            if (sessionUserId === clientTwoId) {
+                allConversations = await prisma.conversation.findMany();
+
+                for (let i = 0; i < allConversations.length; i++) {
+                    if (allConversations[i].usersId.length === 2) {
+                        if (
+                            allConversations[i].usersId[0] === sessionUserId &&
+                            allConversations[i].usersId[1] === clientTwoId
+                        ) {
+                            conversation = allConversations[i];
+                        }
                     }
                 }
-            });
+            } else {
+                conversation = await prisma.conversation.findFirst({
+                    where : {
+                        usersId : {
+                            hasEvery : [ sessionUserId, clientTwoId ]
+                        }
+                    }
+                });
+            }
 
             if (conversation) {
-                return NextResponse.json({message : "Conversation Found",
+                return NextResponse.json({
+                    message : "Conversation found",
                     conversation : conversation,
                     flag : "success"
                 })
             } else {
-                const conversation = await prisma.conversation.create({
+                conversation = await prisma.conversation.create({
                     data : {
-                        usersId : [ sessionUserId.value, clientTwoId ]
+                        usersId : [ sessionUserId, clientTwoId ]
                     }
                 });
 
-                return NextResponse.json({message : "New Conversation Created",
+                return NextResponse.json({
+                    message : "New conversation created",
                     conversation : conversation,
                     flag : "success"
                 })
