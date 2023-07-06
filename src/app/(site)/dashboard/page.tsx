@@ -34,6 +34,7 @@ export default function Dashboard() {
                 });
 
                 const data = await response.json();
+                console.log(data.sessionUser.name)
                 setSessionUserName(data.sessionUser.name)
             } catch (err) {
                 console.error(err)
@@ -49,6 +50,7 @@ export default function Dashboard() {
                     headers : {"Content-Type" : "application/json"}
                 });
                 const data = await response.json();
+                console.log(data);
                 setConversations(data.conversations)
             } catch (err) { 
                 console.error(err);
@@ -132,8 +134,8 @@ export default function Dashboard() {
                                                             </div>
                                                         ) : (
                                                             <div>
-                                                                <h2 className="text-base font-bold mx-2 text-gray-900"> {conversation.users[1].name} </h2>
-                                                                <h3 className="text-sm font-bold mx-2 text-gray-400"> {conversation.users[1].email} </h3>
+                                                                <h2 className="text-base font-bold mx-2 text-gray-900"> {conversation.users[0].name} </h2>
+                                                                <h3 className="text-sm font-bold mx-2 text-gray-400"> {conversation.users[0].email} </h3>
                                                             </div>
                                                         )
                                                     )}

@@ -74,6 +74,7 @@ export async function GET(request : Request,
 
                 return NextResponse.json({
                     message : "conversation data retrieved",
+                    conversationId : conversationId,
                     receivers : receivers,
                     members : conversationUsers,
                     messages : conversationMessages,

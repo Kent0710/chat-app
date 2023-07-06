@@ -23,6 +23,7 @@ export default function MessagePage() {
   const [members, setMembers] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false)
   const [users, setUsers] = useState<any[]>([]);
+  const [conversationId, setConversationId] = useState("");
 
   const [conversations, setConversations] = useState<any[]>([]);
 
@@ -46,6 +47,7 @@ export default function MessagePage() {
         
         const data = await response.json();
         console.log(data)
+        setConversationId(data.conversationId)
         setSenderName(data.sender.name);
         setMembers(data.members);
         setMessages(data.messages);
@@ -350,6 +352,20 @@ export default function MessagePage() {
       }
     }
 
+  async function deleteConversation(conversationId : string) {
+    try {
+      const response = await fetch (`/api/${conversationId}/deleteConversation`, {
+        method : "DELETE",
+        headers : {"Content-Type" : "application/json"}
+      })
+      const data = await response.json();
+      console.log(data);
+      if (data.flag) router.push(`/dashboard`)
+    } catch (err) { 
+      console.error(err);
+    }
+  }
+
   async function checkExistingConversation(clientTwoId : string) {
     try {
         const response = await fetch (`/api/checkExistingConversation`, {
@@ -583,7 +599,7 @@ export default function MessagePage() {
             </div>
 
             <div className="flex flex-col items-center w-full bg-slate-200 my-4 p-4 rounded-lg ">
-              <h1 className=" text-lg font-bold text-gray-900"> shin </h1>
+              <h1 className=" text-lg font-bold text-gray-900"> {receiver} </h1>
               <h2 className="text-base font-bold text-gray-400"> shin@gmail.com </h2>
 
               <div className="flex flex-col w-full my-4 gap-2">
@@ -607,7 +623,7 @@ export default function MessagePage() {
                     <h1>Create group chat</h1>
                 </div>
 
-                <div className="flex gap-3 mx-4">
+                <div className="flex gap-3 mx-4 hover:bg-slate-300 hover:cursor-pointer open:bg-blue-200" onClick={() => deleteConversation(conversationId)}>
                   <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                     <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
                   </svg>
