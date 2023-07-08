@@ -5,8 +5,7 @@ import { skip } from "node:test";
 export async function POST(request : Request) {
     try {
         const usernames = [];
-
-        const { addedUsersId } = await request.json();
+        const { addedUsersId, addedNewUsersId } = await request.json();
         for (let i = 0; i < addedUsersId.length; i++) {
             const user = await prisma.user.findUnique({
                 where : {
@@ -17,7 +16,21 @@ export async function POST(request : Request) {
             if (user) usernames.push(user.name);
         }
 
-        return NextResponse.json({usernames : usernames});
+        const newUsernames = [];
+        for (let i = 0; i < addedNewUsersId.length; i++) {
+            const user = await prisma.user.findUnique({
+                where : {
+                    id : addedNewUsersId[i]
+                }
+            });
+
+            if (user) newUsernames.push(user.name)
+        }
+
+        return NextResponse.json({
+            usernames : usernames,
+            newUsernames : newUsernames
+        });
 
     } catch (err) {
         return NextResponse.json({message : err});

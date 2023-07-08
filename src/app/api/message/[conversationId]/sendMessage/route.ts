@@ -40,34 +40,12 @@ export async function POST(request : Request,
                     }
                 });
 
-                // let listeners = conversation?.users.map(user => user.name) || "";
-                // for (let i = 0; i < listeners?.length; i++) {
-                //     await pusherServer.trigger(`new-message-${listeners[i]}`, 'new-message', {
-                //         newMessage : newMessage
-                //     })
-                // }
-
-                // listeners?.map(async (listener) => {
-                //     await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
-                //         newMessage : newMessage
-                //     })
-                // });
-
-                // const name1 = "shin";
-                // const name2 = "nami";
-                // await pusherServer.trigger(`new-message-${name1}`, 'new-message', {
-                //     newMessage : newMessage
-                // })
-                // await pusherServer.trigger(`new-message-${name2}`, 'new-message', {
-                //     newMessage : newMessage
-                // })
-
-                // let listeners = [ "shin", "nami" ];
-                // await listeners.map( async (listener) => {
-                //     await pusherServer.trigger(`new-message-${listener}`, 'new-message', {
-                //         newMessage : newMessage
-                //     })
-                // })
+                let listeners = conversation?.users.map(user => user.name) || "";
+                for (let i = 0; i < listeners?.length; i++) {
+                    await pusherServer.trigger(`new-message-${listeners[i]}`, 'new-message', {
+                        newMessage : newMessage
+                    })
+                }
 
                 // add listerns : listeners here
                 const responseBody = { message : "New Message Sent",  }
